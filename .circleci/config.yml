@@ -21,9 +21,8 @@ jobs:
           name: Test codes
           command: |
             cd ./app
-            pytest
-            pytest --cov=app
-
+            python -m pytest
+            python -m pytest --cov=app
 
 workflows:
   build_and_deploy:
