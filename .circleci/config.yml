@@ -33,7 +33,7 @@ jobs:
           command: |
             cd ./tagging
             mkdir /tmp/workspace
-            bash ./git_tagging.sh -v patch >> /tmp/workspace/bash.env
+            sh ./git_tagging.sh -v patch >> /tmp/workspace/bash.env
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
