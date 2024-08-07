@@ -15,11 +15,12 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             pip install -r app/requirements.txt
       - run:
           name: Test codes
           command: |
-            cd app/
+            cd ./app
             pytest
             pytest --cov=app
 
