@@ -4,14 +4,15 @@ version: 2.1
 
 base_image: &base_image
   docker:
-    - image: python:3.10-slim
+    - image: jdrouet/docker-with-buildx:stable
 
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   unit_test:
-    <<: *base_image
+    docker:
+      - image: python:3.10-slim
     steps:
       - checkout
       - run:
@@ -40,8 +41,7 @@ jobs:
 
 
   build:
-    docker:
-      - image: jdrouet/docker-with-buildx:stable
+    <<: *base_image
     steps:
       - attach_workspace:
           at: /tmp/workspace
