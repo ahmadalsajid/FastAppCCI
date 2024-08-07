@@ -7,7 +7,7 @@ version: 2.1
 jobs:
   unit_test:
     docker:
-      - image: cimg/python:3.10
+      - image: python:3.10-slim
     steps:
       - checkout
       - run:
@@ -27,8 +27,14 @@ jobs:
       - setup_remote_docker:
           version: default
           docker_layer_caching: true
-      - run: |
-          docker buildx build  --platform linux/arm64,linux/amd64  --tag ahmadalsajid/fast-app:dev ./app/
+      - run:
+          name: docker login
+          command: docker login -u "$DOCKER_USERNAME" -p "DOCKER_TOKEN"
+      - run:
+          name: build docker image and push to docker hub
+          command: |
+            docker buildx create --use
+            docker buildx build --push --platform linux/arm64,linux/amd64  --tag ahmadalsajid/fast-app:dev ./app/
 
 
 workflows:
