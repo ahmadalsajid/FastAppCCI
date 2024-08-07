@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Get latest git tag and increase SemVer
           command: |
-            chmod +x /tagging/git_tagging.sh 
+            chmod +x ./tagging/git_tagging.sh 
             ./tagging/git_tagging.sh -v patch >> $BASH_ENV
       - run:
           name: docker login
