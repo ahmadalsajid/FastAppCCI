@@ -42,7 +42,7 @@ workflows:
     jobs:
       - unit_test
       - build:
-          context: fastapcci_<< pipeline.git.branch >>
+          context: fastappcci_<< pipeline.git.branch >>
           filters:
             branches:
               only:
