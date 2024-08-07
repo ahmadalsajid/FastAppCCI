@@ -42,5 +42,11 @@ workflows:
     jobs:
       - unit_test
       - build:
+          context: fastapcci_<< pipeline.git.branch >>
+          filters:
+            branches:
+              only:
+                - main
+                - dev
           requires:
             - unit_test
