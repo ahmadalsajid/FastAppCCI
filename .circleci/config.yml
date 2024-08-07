@@ -34,8 +34,15 @@ jobs:
           name: build docker image and push to docker hub
           command: |
             docker buildx create --use
-            docker buildx build --push --platform linux/arm64,linux/amd64  --tag ahmadalsajid/fast-app:dev ./app/
-
+#            docker buildx build --push --platform linux/arm64,linux/amd64  --tag "$IMAGE_NAME":dev ./app/
+            if [ $BRANCH_NAME = main ]; then
+              docker buildx build --platform linux/arm64,linux/amd64  --tag "$IMAGE_NAME":latest ./app/
+            else
+              docker buildx build --platform linux/arm64,linux/amd64  --tag "$IMAGE_NAME":dev ./app/
+            fi
+    environment:
+      IMAGE_NAME: ahmadalsajid/fast-app
+      BRANCH_NAME: << pipeline.git.branch >>
 
 workflows:
   build_and_deploy:
