@@ -43,9 +43,9 @@ jobs:
           command: |
             docker buildx create --use
             if [ $BRANCH_NAME = main ]; then
-              docker buildx build --push --platform linux/arm64,linux/amd64 --tag "$IMAGE_NAME":latest --tag "$IMAGE_NAME":"$git_tag" ./app/
+              docker buildx build --push --platform linux/arm64,linux/amd64 --tag "$IMAGE_NAME":latest --tag "$IMAGE_NAME":"$GIT_TAG" ./app/
             else
-              docker buildx build --push --platform linux/arm64,linux/amd64  --tag "$IMAGE_NAME":dev --tag "$IMAGE_NAME":"$git_tag"-dev ./app/
+              docker buildx build --push --platform linux/arm64,linux/amd64  --tag "$IMAGE_NAME":dev --tag "$IMAGE_NAME":"$GIT_TAG"-dev ./app/
             fi
     environment:
       IMAGE_NAME: ahmadalsajid/fast-app

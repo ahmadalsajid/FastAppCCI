@@ -45,6 +45,6 @@ fi
 NEW_TAG="$VNUM1.$VNUM2.$VNUM3"
 #echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
 
-echo "git_tag=$NEW_TAG"
+echo "GIT_TAG=$NEW_TAG"
 
 exit 0
