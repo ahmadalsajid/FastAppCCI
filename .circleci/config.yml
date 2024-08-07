@@ -34,7 +34,7 @@ jobs:
           name: Get latest git tag and increase SemVer
           command: |
             chmod +x ./tagging/git_tagging.sh 
-            ./tagging/git_tagging.sh -v patch >> $BASH_ENV
+            bash ./tagging/git_tagging.sh -v patch >> $BASH_ENV
       - run:
           name: docker login
           command: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_TOKEN"
