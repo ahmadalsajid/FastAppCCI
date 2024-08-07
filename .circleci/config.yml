@@ -22,22 +22,6 @@ jobs:
             pip install -r app/requirements.txt
             pytest --cov=app
 
-  get_latest_tag:
-    <<: *base_image
-    steps:
-      - checkout
-      - run:
-          name: Get latest git tag and increase SemVer
-          command: |
-            cd ./tagging
-            mkdir /tmp/workspace
-            sh ./git_tagging.sh -v patch >> /tmp/workspace/bash.env
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - bash.env
-
-
   build:
     docker:
       - image: ahmadalsajid/docker-with-buildx:latest
@@ -80,4 +64,3 @@ workflows:
                 - dev
           requires:
             - unit_test
-            - get_latest_tag
