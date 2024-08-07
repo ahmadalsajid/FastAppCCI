@@ -5,27 +5,36 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  build_and_test:
+  unit_test:
     docker:
       - image: cimg/python:3.10
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: Install dependencies and test with pytest
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r app/requirements.txt
-            python -m pytest --cov=app
-      - run:
-          name: Test codes
-          command: |
-            pip list
-            python -m pytest
-            python -m pytest --cov=app
+            pytest --cov=app
+
+  build:
+    docker:
+      - image: jdrouet/docker-with-buildx:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: default
+          docker_layer_caching: true
+      - run: |
+          docker buildx build  --platform linux/arm64,linux/amd64  --tag ahmadalsajid/fast-app:dev ./app/
+
 
 workflows:
   build_and_deploy:
     jobs:
-      - build_and_test
+      - unit_test
+      - build:
+          requires:
+            - unit_test
