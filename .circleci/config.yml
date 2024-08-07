@@ -31,10 +31,10 @@ jobs:
           name: Get latest git tag and increase SemVer
           command: |
             cd ./tagging
-            bash ./git_tagging.sh -v patch >> $BASH_ENV
-            cp $BASH_ENV bash.env
+            mkdir /tmp/workspace
+            bash ./git_tagging.sh -v patch >> /tmp/workspace/bash.env
       - persist_to_workspace:
-          root: .
+          root: /tmp/workspace
           paths:
             - bash.env
 
@@ -44,8 +44,9 @@ jobs:
       - image: jdrouet/docker-with-buildx:stable
     steps:
       - attach_workspace:
-          at: .
+          at: /tmp/workspace
       - run: cat bash.env >> $BASH_ENV
+      - run: printenv git_tag
       - checkout
       - setup_remote_docker:
           version: default
